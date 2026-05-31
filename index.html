@@ -89,12 +89,22 @@
   .nav-links a { font-size: 0.86rem; letter-spacing: 0.06em; color: var(--ink-soft); transition: color 0.25s; }
   .nav-links a:not(.nav-cta):hover { color: var(--terracotta); }
   .nav-cta {
-    border: 1px solid var(--ink); border-radius: 999px;
+    border: 1px solid var(--ink); border-radius: 999px; white-space: nowrap;
     padding: 9px 20px; font-size: 0.8rem; letter-spacing: 0.08em;
     transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s;
   }
   .nav-cta:hover { background: var(--ink); color: var(--cream); }
   @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } }
+  @media (max-width: 540px) {
+    nav { padding: 14px 18px; }
+    .brand { font-size: 1.15rem; gap: 10px; }
+    .brand-mark { width: 27px; height: 27px; }
+    .nav-cta { padding: 7px 14px; font-size: 0.72rem; letter-spacing: 0.05em; }
+    .hero { min-height: auto; padding: 104px 22px 72px; }
+    .scroll-hint { display: none; }
+    .brand-emblem { width: 132px; margin-bottom: 14px; }
+    .btn-row { gap: 12px; }
+  }
 
   /* ---------- Hero ---------- */
   header.hero {
@@ -129,13 +139,33 @@
   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .brand-lockup { text-align: center; }
   .brand-emblem { width: min(42vw, 176px); margin: 0 auto 18px; filter: drop-shadow(0 14px 26px rgba(189,90,54,0.16)); }
-  .brand-emblem svg { width: 100%; height: auto; display: block; }
+  .brand-emblem svg { width: 100%; height: auto; display: block; transform-origin: 50% 50%; animation: rotate360 48s linear infinite; }
+  @keyframes rotate360 { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .brand-emblem svg { animation: none; } }
   .brand-name {
+    display: inline-block;
     font-family: 'Great Vibes', cursive; font-weight: 400;
-    line-height: 0.9; font-size: clamp(4.2rem, 12vw, 6.6rem);
-    background: linear-gradient(135deg, var(--terracotta-deep) 0%, var(--terracotta) 52%, var(--gold) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    padding: 0.06em 0.12em 0.16em;
+    line-height: 0.9; font-size: clamp(3.4rem, 13vw, 6.6rem);
+    background: linear-gradient(110deg,
+      var(--terracotta-deep) 0%, var(--terracotta) 28%,
+      var(--gold-soft) 48%, var(--gold) 52%,
+      var(--terracotta) 72%, var(--terracotta-deep) 100%);
+    background-size: 250% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    padding: 0.06em 0.12em 0.16em; cursor: default;
+    animation: shimmer 7s linear infinite;
+    transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
+  }
+  .brand-name:hover {
+    transform: scale(1.04) rotate(-0.6deg);
+    filter: drop-shadow(0 6px 16px rgba(189,90,54,0.28));
+    animation-duration: 2.4s;
+  }
+  @keyframes shimmer { to { background-position: 250% center; } }
+  @media (prefers-reduced-motion: reduce) {
+    .brand-name { animation: none; }
+    .brand-name:hover { transform: none; }
   }
   .brand-sub {
     font-family: 'Jost', sans-serif; text-transform: uppercase; font-weight: 400;
@@ -241,13 +271,31 @@
   }
   .tile {
     position: relative; aspect-ratio: 1; border-radius: 6px; overflow: hidden;
-    background: var(--cream-deep); border: 1px solid var(--line);
+    background: var(--cream-deep); border: 1px solid rgba(199,154,78,0.5);
     display: grid; place-items: center;
     transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
   }
+  /* cool framed-print border (gold hairline · cream mat · gold line) */
+  .tile::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 6px; z-index: 3;
+    box-shadow:
+      inset 0 0 0 1px rgba(247,241,231,0.85),
+      inset 0 0 0 6px rgba(247,241,231,0.7),
+      inset 0 0 0 7px rgba(199,154,78,0.55);
+    transition: box-shadow 0.55s var(--ease);
+  }
+  .tile:hover::after {
+    box-shadow:
+      inset 0 0 0 1px rgba(189,90,54,0.7),
+      inset 0 0 0 6px rgba(247,241,231,0.88),
+      inset 0 0 0 7px rgba(199,154,78,0.85),
+      inset 0 0 0 9px rgba(189,90,54,0.30);
+  }
   .tile svg { width: 72%; height: 72%; opacity: 0.85; transition: transform 0.8s var(--ease); }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s var(--ease); }
   .tile:hover { transform: translateY(-4px); box-shadow: 0 24px 40px -24px rgba(43,39,34,0.45); }
   .tile:hover svg { transform: rotate(35deg) scale(1.04); }
+  .tile:hover img { transform: scale(1.06); }
   .tile .cap {
     position: absolute; inset: auto 0 0 0; padding: 14px 16px;
     font-size: 0.78rem; letter-spacing: 0.04em;
@@ -366,7 +414,7 @@
     <div class="section-head reveal">
       <span class="eyebrow">Selected work</span>
       <h2>The gallery</h2>
-      <p>A glimpse of recent mandalas — ink on paper, layered colour, and fine linework. Swap these tiles for photos of your real pieces.</p>
+      <p>A glimpse of recent pieces — layered colour, fine linework, and patient dotwork, each one drawn by hand.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
   </div>
@@ -519,22 +567,24 @@
   document.getElementById('portraitMandala').innerHTML = mandala({ rings: 4, stroke: '#e0c485', accent: '#e0c485', sw: 1.2 });
   document.getElementById('footerMandala').innerHTML = emblem({ p1: '#e0c485', p2: '#cbb083', p3: '#e0c485' });
 
-  // Gallery tiles
-  const palettes = [
-    { stroke: '#bd5a36', accent: '#1f4a44' },
-    { stroke: '#1f4a44', accent: '#c79a4e' },
-    { stroke: '#9c4426', accent: '#235a52' },
-    { stroke: '#c79a4e', accent: '#bd5a36' },
-    { stroke: '#1f4a44', accent: '#bd5a36' },
-    { stroke: '#bd5a36', accent: '#c79a4e' },
+  // Gallery — Jagruti's real artwork
+  const works = [
+    { src: 'art/full-mandala.jpeg',    title: 'Bloom Mandala — fineliner on paper' },
+    { src: 'art/mandala-1.jpeg',       title: 'Colour Study — mandala series' },
+    { src: 'art/krishna.jpeg',         title: 'Krishna — devotional mandala' },
+    { src: 'art/colour-arc.jpeg',      title: 'Neon Arc — colour mandala' },
+    { src: 'art/mahadev.jpeg',         title: 'Mahadev — Shiva mandala' },
+    { src: 'art/half-mandala.jpeg',    title: 'Half Mandala — fineliner & dotwork' },
+    { src: 'art/mandala-2.jpeg',       title: 'Floral Zentangle — ink on paper' },
+    { src: 'art/sepia-mandala.jpeg',   title: 'Sepia Bloom — fineliner mandala' },
+    { src: 'art/half-mandala-2.jpeg',  title: 'Radiant Arc — dotwork & linework' },
   ];
-  const titles = ['Lotus Bloom', 'Midnight Bloom', 'Sunrise Wheel', 'Golden Hour', 'Still Waters', 'Festival of Dots'];
   const gg = document.getElementById('galleryGrid');
-  palettes.forEach((p, i) => {
+  works.forEach((w) => {
     const d = document.createElement('div');
     d.className = 'tile';
-    d.innerHTML = mandala({ rings: 4 + (i % 3), stroke: p.stroke, accent: p.accent, sw: 1.3 }) +
-      `<div class="cap">${titles[i]} · ink on paper</div>`;
+    d.innerHTML = `<img src="${encodeURI(w.src)}" alt="${w.title}" loading="lazy" />` +
+      `<div class="cap">${w.title}</div>`;
     gg.appendChild(d);
   });
 
