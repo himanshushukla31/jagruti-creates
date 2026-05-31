@@ -483,6 +483,16 @@
     o = Object.assign({ p1: '#bd5a36', p2: '#1f4a44', p3: '#c79a4e' }, o || {});
     const petal = (len, w, col, sw) =>
       `<path d="M0 0 C ${w} ${(-len*0.45).toFixed(1)} ${w} ${(-len*0.82).toFixed(1)} 0 ${-len} C ${-w} ${(-len*0.82).toFixed(1)} ${-w} ${(-len*0.45).toFixed(1)} 0 0 Z" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+
+    // Simplified, bold mark for tiny sizes (nav / favicon)
+    if (o.simple) {
+      let m = `<circle cx="60" cy="60" r="51" fill="none" stroke="${o.p1}" stroke-width="3.4"/>`;
+      for (let i = 0; i < 8; i++) m += `<g transform="translate(60 60) rotate(${i*45}) translate(0 -30)">${petal(25, 9.5, o.p1, 3.4)}</g>`;
+      m += `<circle cx="60" cy="60" r="13.5" fill="none" stroke="${o.p2}" stroke-width="3.2"/>`;
+      m += `<circle cx="60" cy="60" r="5" fill="${o.p3}"/>`;
+      return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jagruti Creates emblem">${m}</svg>`;
+    }
+
     let s = '';
     // framing rings
     s += `<circle cx="60" cy="60" r="57" fill="none" stroke="${o.p3}" stroke-width="0.8"/>`;
@@ -505,7 +515,7 @@
   }
 
   document.getElementById('heroEmblem').innerHTML = emblem();
-  document.getElementById('navEmblem').innerHTML = emblem();
+  document.getElementById('navEmblem').innerHTML = emblem({ simple: true });
   document.getElementById('portraitMandala').innerHTML = mandala({ rings: 4, stroke: '#e0c485', accent: '#e0c485', sw: 1.2 });
   document.getElementById('footerMandala').innerHTML = emblem({ p1: '#e0c485', p2: '#cbb083', p3: '#e0c485' });
 
