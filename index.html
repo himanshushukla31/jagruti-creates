@@ -142,6 +142,11 @@
   /* Brand lockup — custom vector emblem + script wordmark */
   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .brand-lockup { text-align: center; }
+  .hero-badge {
+    width: min(88vw, 500px); height: auto; display: block; margin: 0 auto;
+    transition: transform 0.6s var(--ease), filter 0.6s var(--ease); cursor: default;
+  }
+  .hero-badge:hover { transform: scale(1.025); filter: drop-shadow(0 18px 40px rgba(156,68,38,0.20)); }
   .brand-emblem { width: min(42vw, 176px); margin: 0 auto 18px; filter: drop-shadow(0 14px 26px rgba(189,90,54,0.16)); }
   .brand-emblem svg { width: 100%; height: auto; display: block; transform-origin: 50% 50%; animation: rotate360 48s linear infinite; }
   @keyframes rotate360 { to { transform: rotate(360deg); } }
@@ -382,10 +387,7 @@
   <div class="hero-inner">
     <h1 class="visually-hidden">Jagruti Creates — handmade mandala art &amp; custom commissions</h1>
     <div class="brand-lockup anim" style="--d:.1s">
-      <div class="brand-emblem" id="heroEmblem"></div>
-      <div class="brand-name">Jagruti</div>
-      <div class="brand-sub"><span class="d">.</span>creates</div>
-      <div class="brand-tag"><span class="oline"></span>Mandalas · Art · Mindful Creations<span class="oline"></span></div>
+      <img class="hero-badge" src="badge.png" alt="Jagruti Creates — Mandalas · Art · Mindful Creations" />
     </div>
     <p class="lede anim" style="--d:.4s">Original pieces &amp; custom commissions, drawn dot by dot with patience and love by Jagruti.</p>
     <div class="btn-row anim" style="--d:.6s">
@@ -566,7 +568,6 @@
     return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jagruti Creates emblem">${s}</svg>`;
   }
 
-  document.getElementById('heroEmblem').innerHTML = emblem();
   document.getElementById('navEmblem').innerHTML = emblem({ simple: true });
   document.getElementById('portraitMandala').innerHTML = mandala({ rings: 4, stroke: '#e0c485', accent: '#e0c485', sw: 1.2 });
   document.getElementById('footerMandala').innerHTML = emblem({ p1: '#e0c485', p2: '#cbb083', p3: '#e0c485' });
