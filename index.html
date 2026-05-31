@@ -94,7 +94,11 @@
     transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s;
   }
   .nav-cta:hover { background: var(--ink); color: var(--cream); }
-  @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } }
+  @media (max-width: 760px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { min-height: auto; padding-bottom: 80px; }
+    .scroll-hint { display: none; }
+  }
   @media (max-width: 540px) {
     nav { padding: 14px 18px; }
     .brand { font-size: 1.15rem; gap: 10px; }
