@@ -18,7 +18,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -142,11 +142,20 @@
   /* Brand lockup — custom vector emblem + script wordmark */
   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .brand-lockup { text-align: center; }
-  .hero-badge {
-    width: min(88vw, 500px); height: auto; display: block; margin: 0 auto;
-    transition: transform 0.6s var(--ease), filter 0.6s var(--ease); cursor: default;
+  .badge { position: relative; width: min(88vw, 500px); aspect-ratio: 1; margin: 0 auto; }
+  .badge-art {
+    position: absolute; top: 17%; left: 17%; width: 66%; height: 66%;
+    object-fit: cover; border-radius: 50%;
+    mix-blend-mode: multiply; transform-origin: 50% 50%;
+    -webkit-mask: radial-gradient(circle, #000 99%, transparent 100%);
+            mask: radial-gradient(circle, #000 99%, transparent 100%);
+    animation: rotate360 42s linear infinite;
   }
-  .hero-badge:hover { transform: scale(1.025); filter: drop-shadow(0 18px 40px rgba(156,68,38,0.20)); }
+  .badge-ring { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .ring-name { font-family: 'Cinzel', serif; font-size: 35px; font-weight: 600; letter-spacing: 3px; fill: #9c4426; }
+  .ring-tag  { font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 500; letter-spacing: 4px; fill: #1f4a44; }
+  .ring-star { font-size: 22px; fill: #c79a4e; }
+  @media (prefers-reduced-motion: reduce) { .badge-art { animation: none; } }
   .brand-emblem { width: min(42vw, 176px); margin: 0 auto 18px; filter: drop-shadow(0 14px 26px rgba(189,90,54,0.16)); }
   .brand-emblem svg { width: 100%; height: auto; display: block; transform-origin: 50% 50%; animation: rotate360 48s linear infinite; }
   @keyframes rotate360 { to { transform: rotate(360deg); } }
@@ -387,7 +396,23 @@
   <div class="hero-inner">
     <h1 class="visually-hidden">Jagruti Creates — handmade mandala art &amp; custom commissions</h1>
     <div class="brand-lockup anim" style="--d:.1s">
-      <img class="hero-badge" src="badge.png" alt="Jagruti Creates — Mandalas · Art · Mindful Creations" />
+      <div class="badge" role="img" aria-label="Jagruti Creates — Mandalas, Art, Mindful Creations">
+        <img class="badge-art" src="art/full-mandala.jpeg" alt="" aria-hidden="true" />
+        <svg class="badge-ring" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <path id="bTop" d="M 70 300 A 230 230 0 0 1 530 300" fill="none"/>
+            <path id="bBot" d="M 70 300 A 230 230 0 0 0 530 300" fill="none"/>
+          </defs>
+          <circle cx="300" cy="300" r="200" fill="none" stroke="#c79a4e" stroke-width="2.5"/>
+          <circle cx="300" cy="300" r="206" fill="none" stroke="#bd5a36" stroke-width="1"/>
+          <circle cx="300" cy="300" r="290" fill="none" stroke="#bd5a36" stroke-width="1"/>
+          <circle cx="300" cy="300" r="296" fill="none" stroke="#c79a4e" stroke-width="2.5"/>
+          <text class="ring-name"><textPath href="#bTop" startOffset="50%" text-anchor="middle">JAGRUTI CREATES</textPath></text>
+          <text class="ring-tag"><textPath href="#bBot" startOffset="50%" text-anchor="middle">MANDALAS · ART · MINDFUL CREATIONS</textPath></text>
+          <text x="70" y="300" class="ring-star" text-anchor="middle" dominant-baseline="central">&#10022;</text>
+          <text x="530" y="300" class="ring-star" text-anchor="middle" dominant-baseline="central">&#10022;</text>
+        </svg>
+      </div>
     </div>
     <p class="lede anim" style="--d:.4s">Original pieces &amp; custom commissions, drawn dot by dot with patience and love by Jagruti.</p>
     <div class="btn-row anim" style="--d:.6s">
@@ -395,7 +420,6 @@
       <a href="#commission" class="btn btn-ghost">Commission a piece</a>
     </div>
   </div>
-  <a href="#about" class="scroll-hint anim" style="--d:.85s" aria-label="Scroll to explore"><span>scroll</span><span class="track"></span></a>
 </header>
 
 <!-- ABOUT -->
